@@ -3,7 +3,7 @@ name = "PH3AR"
 type = "javascript"
 
 [build]
-command = "npm install && npm run build"
+command = "npm install"
 [build.upload]
 format = "service-worker"
 main = "./server.js"

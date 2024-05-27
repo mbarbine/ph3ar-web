@@ -9,6 +9,7 @@ const app = express();
 dotenv.config(); // Load environment variables from .env file
 
 const port = process.env.PORT || 3000;
+const sessionSecret = process.env.SESSION_SECRET;
 
 // Middleware to parse JSON
 app.use(express.json());

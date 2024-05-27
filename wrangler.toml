@@ -1,5 +1,5 @@
 # wrangler.toml
-name = "cloudflare-webapp"
+name = "PH3AR"
 type = "javascript"
 
 [build]

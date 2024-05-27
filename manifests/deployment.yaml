@@ -1,0 +1,23 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph3ar-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ph3ar-web
+  template:
+    metadata:
+      labels:
+        app: ph3ar-web
+    spec:
+      containers:
+      - name: ph3ar-web
+        image: ghcr.io/YOUR_GITHUB_USERNAME/ph3ar-web:latest
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: ph3ar-web-secrets

@@ -1,0 +1,82 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/@ladjs/bootstrap-social/bootstrap-social.scss";
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "node_modules/@fortawesome/fontawesome-free/scss/brands";
+@import "node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid";
+
+// Retro Arcade and BBS Style Color Variables
+$snapchat-yellow: #fffc00;
+$snapchat-yellow-dark: #e4e400;
+$twitch-purple: #6441a5;
+$twitch-purple-dark: #503484;
+$twitter-blue: #1DA1F2; // Updated to Twitter’s brand color
+$google-red: #DB4437; // Updated to Google’s brand color
+$white: #FFF;
+$arcade-background: #000; // Arcade style typically has a dark background
+$arcade-font-family: 'Press Start 2P', cursive; // Example retro font
+
+// Placeholder for common white text style, retro themed
+%white-text {
+  color: $white !important;
+  font-family: $arcade-font-family;
+  text-shadow: 0 0 5px $white; // Gives a glowing effect
+
+  &:hover, &:active {
+    color: $white !important;
+    text-shadow: 0 0 10px $white; // Brighter glow on hover/active
+  }
+}
+
+// Styling adjustments for a more retro arcade and BBS vibe
+body {
+  background-color: $arcade-background;
+  font-family: $arcade-font-family;
+}
+
+// Basic Snapchat Button CSS, adjusted for retro feel
+.btn-snapchat {
+  background-color: $snapchat-yellow;
+  color: $black !important;
+  border: 2px solid $white; // Adds a retro border
+  @extend %white-text;
+
+  &:hover, &:active {
+    background-color: $snapchat-yellow-dark;
+  }
+}
+
+// Basic Twitch Button CSS, with retro adjustments
+.btn-twitch {
+  background-color: $twitch-purple;
+  @extend %white-text;
+
+  &:hover, &:active {
+    background-color: $twitch-purple-dark;
+  }
+}
+
+// Basic Twitter Button CSS, retro themed
+.btn-twitter {
+  background-color: $twitter-blue;
+  @extend %white-text;
+
+  &:hover, &:active {
+    background-color: lighten($twitter-blue, 10%);
+  }
+}
+
+// Basic Google Button CSS, with a retro touch
+.btn-google {
+  background-color: $google-red;
+  @extend %white-text;
+
+  &:hover, &:active {
+    background-color: darken($google-red, 10%);
+  }
+}
+
+// Adjusts padding after fontawesome icons for better spacing, with a retro feel
+.iconpadding {
+  padding-right: 6px !important;
+}

@@ -1,0 +1,43 @@
+/* Extend the arcade theme to form elements */
+
+.bbs-signup-wrapper {
+  background-color: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto; /* Center the form */
+  width: 80%; /* Adjust width as needed */
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Orange glow to match arcade theme */
+}
+
+.bbs-form-group {
+  margin-bottom: 15px; /* Space out form groups */
+}
+
+.bbs-label {
+  display: block; /* Ensure labels are block-level for proper spacing */
+  color: #ff6600; /* Orange color to match arcade theme */
+  margin-bottom: 5px; /* Space between label and input */
+}
+
+.bbs-input {
+  width: 100%; /* Full width of the form group */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ff6600; /* Orange border */
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white for readability */
+}
+
+.bbs-btn {
+  background-color: #00ff00; /* Bright green for visibility and to match theme */
+  color: black; /* Ensure text is visible */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block; /* Allows for proper spacing and alignment */
+  border: none; /* Remove default border */
+  transition: background-color 0.2s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.bbs-btn:hover {
+  background-color: #66ff66; /* Lighter green on hover for interaction feedback */
+}

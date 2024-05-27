@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started - Arcade Mania</title>
+    <link rel="stylesheet" href="arcade.css">
+    <style>
+        :root {
+            --background-color: #000;
+            --text-color: #fff;
+            --accent-color: #ff6600;
+            --game-bg-color: #333;
+            --overlay-bg-color: rgba(0,0,0,0.95);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        header, footer {
+            background-color: var(--game-bg-color);
+            color: var(--accent-color);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .game-info, .game-list {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .game {
+            border: 2px solid var(--accent-color);
+            padding: 10px;
+            width: calc(33% - 20px);
+            background: var(--game-bg-color);
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0 auto;
+            max-width: 300px;
+        }
+
+        .game h4, .game p {
+            margin: 10px 0;
+        }
+
+        .play-button {
+            background-color: var(--accent-color);
+            color: var(--background-color);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .game-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--overlay-bg-color);
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        .overlay-content {
+            width: 80%;
+            max-width: 960px;
+        }
+
+        .close-btn {
+            color: var(--text-color);
+            font-size: 30px;
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .game {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .game {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .game-overlay, .game {
+                transition: transform 0.5s ease;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Arcade Mania</h1>
+    </header>
+
+    <main>
+        <section class="game-info">
+            <h2>Get Started</h2>
+            <p>Dive into the world of retro arcade gaming! Select a game and start playing.</p>
+        </section>
+
+        <section class="game-list">
+            <h3 style="color: var(--accent-color);">Choose Your Game</h3>
+            <div class="game" onclick="openGame('https://pacman.js.org/')">
+                <h4>Pac-Man</h4>
+                <p>Join Pac-Man in his quest to munch on those pesky ghosts.</p>
+                <div class="play-button">Play Now</div>
+            </div>
+            <div class="game" onclick="openGame('https://z-space-invaders.netlify.app/#game')">
+                <h4>Space Invaders</h4>
+                <p>Defend Earth from the alien invasion. Shoot 'em up!</p>
+                <div class="play-button">Play Now</div>
+            </div>
+            <div class="game" onclick="openGame('http://www.quakejs.com/')">
+                <h4>Quake</h4>
+                <p>Experience the classic FPS in your browser.</p>
+                <div class="play-button">Play Now</div>
+            </div>
+        </section>
+
+        <div id="gameOverlay" class="game-overlay" aria-hidden="true" tabindex="-1">
+            <div class="overlay-content">
+                <iframe id="gameFrame" title="Game Frame" loading="lazy"></iframe>
+            </div>
+            <span class="close-btn" onclick="closeGame()" tabindex="0" aria-label="Close game">&times;</span>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Arcade Mania</p>
+    </footer>
+
+    <script>
+        function openGame(url) {
+            const gameFrame = document.getElementById('gameFrame');
+            const gameOverlay = document.getElementById('gameOverlay');
+            gameFrame.src = url;
+            gameOverlay.style.display = 'flex';
+            gameOverlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when overlay is active
+        }
+
+        function closeGame() {
+            const gameOverlay = document.getElementById('gameOverlay');
+            gameOverlay.style.display = 'none';
+            gameOverlay.setAttribute('aria-hidden', 'true');
+            document.getElementById('gameFrame').src = '';
+            document.body.style.overflow = ''; // Re-enable scrolling
+        }
+
+        // Allow closing the overlay with the Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeGame();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -13,6 +13,12 @@ RUN npm install
 # Copy the rest of the application source code to the working directory
 COPY . .
 
+# Remove node_modules directory to ensure fresh install
+RUN rm -rf node_modules
+
+# Install dependencies again to ensure compatibility with the container's OS
+RUN npm install
+
 # Expose the port the app runs on
 EXPOSE 3000
 

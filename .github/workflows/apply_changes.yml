@@ -24,17 +24,10 @@ jobs:
         sudo apt-get install zip
         zip -r repository.zip /home/runner/work/ph3ar-web/ph3ar-web
 
-    - name: Check for provided zip file
-      run: |
-        if [ ! -f /path/to/ph3ar-web-1.0.7.zip ]; then
-          echo "Error: /path/to/ph3ar-web-1.0.7.zip not found."
-          exit 1
-        fi
-
-    - name: Unzip changes
+    - name: Unzip apply_changes.zip into the repository
       run: |
         sudo apt-get install unzip
-        unzip -o /path/to/ph3ar-web-1.0.7.zip -d /home/runner/work/ph3ar-web/ph3ar-web
+        unzip -o apply_changes.zip -d /home/runner/work/ph3ar-web/ph3ar-web
 
     - name: Create Pull Request
       run: |
@@ -42,9 +35,9 @@ jobs:
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git checkout -b apply-changes
         git add .
-        git commit -m "Apply changes from the uploaded zip file"
+        git commit -m "Apply changes from apply_changes.zip"
         git push --set-upstream origin apply-changes
-        gh pr create --title "Apply changes from the uploaded zip file" --body "This PR applies changes from the uploaded zip file."
+        gh pr create --title "Apply changes from apply_changes.zip" --body "This PR applies changes from apply_changes.zip."
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

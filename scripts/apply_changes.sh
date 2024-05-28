@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 BRANCH_NAME=$1

@@ -19,29 +19,33 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Configure Git
+    - name: Unzip apply_changes.zip into the repository
+      run: |
+        sudo apt-get install unzip
+        unzip -o apply_changes.zip -d $GITHUB_WORKSPACE/ph3ar-web
+        find $GITHUB_WORKSPACE/ph3ar-web -name ".git" -exec rm -rf {} +
+
+    - name: Try to merge or push changes to main
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-    - name: Unzip changes
-      run: |
-        sudo apt-get install unzip
-        unzip -o ph3ar-web-v1.0.7.zip -d ph3ar-web-release
-
-    - name: Apply changes and commit
-      run: |
-        cd $GITHUB_WORKSPACE
+        cd $GITHUB_WORKSPACE/ph3ar-web
         git add .
         git commit -m "Apply changes from apply_changes.zip"
         git push origin main || true
-
-    - name: Handle conflicts and rebase
-      if: failure()
-      run: |
         git fetch origin
         git rebase origin/main
         git push origin main
-      shell: /usr/bin/bash -e {0}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Pull Request if push to main fails
+      if: failure()
+      run: |
+        cd $GITHUB_WORKSPACE/ph3ar-web
+        git checkout -b apply-changes
+        git push --set-upstream origin apply-changes
+        gh pr create --title "Apply changes from apply_changes.zip" --body "This PR applies changes from apply_changes.zip."
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

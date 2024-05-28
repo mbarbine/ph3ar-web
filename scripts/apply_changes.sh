@@ -3,13 +3,16 @@
 
 BRANCH_NAME=$1
 ZIP_FILE_PATH=$2
-REPO_DIR="$HOME/Documents/github/phear-web"
+REPO_DIR="$GITHUB_WORKSPACE"
+
+# Check if the zip file exists
+if [ ! -f "$ZIP_FILE_PATH" ]; then
+  echo "Error: $ZIP_FILE_PATH not found."
+  exit 1
+fi
 
 # Navigate to the repository directory
 cd $REPO_DIR
-
-# Switch to the specified branch
-git checkout $BRANCH_NAME
 
 # Unzip the changes into the repository directory
 unzip -o $ZIP_FILE_PATH -d $REPO_DIR

@@ -29,13 +29,23 @@ jobs:
         sudo apt-get install unzip
         unzip -o apply_changes.zip -d /home/runner/work/ph3ar-web/ph3ar-web
 
-    - name: Create Pull Request
+    - name: Try to merge or push changes to main
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git checkout -b apply-changes
         git add .
         git commit -m "Apply changes from apply_changes.zip"
+        git push origin main || exit 0
+        git fetch origin
+        git rebase origin/main
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Pull Request if push to main fails
+      if: failure()
+      run: |
+        git checkout -b apply-changes
         git push --set-upstream origin apply-changes
         gh pr create --title "Apply changes from apply_changes.zip" --body "This PR applies changes from apply_changes.zip."
       env:

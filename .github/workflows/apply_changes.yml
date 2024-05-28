@@ -28,6 +28,7 @@ jobs:
       run: |
         sudo apt-get install unzip
         unzip -o apply_changes.zip -d /home/runner/work/ph3ar-web/ph3ar-web
+        find /home/runner/work/ph3ar-web/ph3ar-web -name ".git" -exec rm -rf {} +
 
     - name: Try to merge or push changes to main
       run: |
@@ -35,7 +36,7 @@ jobs:
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add .
         git commit -m "Apply changes from apply_changes.zip"
-        git push origin main || exit 0
+        git push origin main || true
         git fetch origin
         git rebase origin/main
         git push origin main

@@ -3,7 +3,7 @@
 
 BRANCH_NAME=$1
 ZIP_FILE_PATH=$2
-REPO_DIR="$GITHUB_WORKSPACE"
+REPO_DIR="/home/runner/work/ph3ar-web/ph3ar-web"
 
 # Check if the zip file exists
 if [ ! -f "$ZIP_FILE_PATH" ]; then

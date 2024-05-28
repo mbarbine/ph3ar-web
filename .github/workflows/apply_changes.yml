@@ -1,0 +1,38 @@
+
+name: Apply Changes
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  apply-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Unzip changes
+      run: |
+        sudo apt-get install unzip
+        unzip -o ph3ar-web-1.0.7.zip -d ph3ar-web-release
+
+    - name: Apply changes to development branch
+      run: |
+        ./scripts/apply_changes.sh development ph3ar-web-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Apply changes to stage branch
+      run: |
+        ./scripts/apply_changes.sh stage ph3ar-web-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -9,11 +9,19 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {
+    // ⚡ Bolt Optimization: Check if user exists before expensive password hashing
+    // This prevents a potential Denial of Service (DoS) where an attacker sends
+    // repeated signup requests for an existing user, forcing unnecessary bcrypt work.
+    const existingUser = await User.findOne({ where: { username } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ username, password: hashedPassword });
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(400).json({ error: 'Username already exists' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

@@ -14,8 +14,10 @@ const sessionSecret = process.env.SESSION_SECRET;
 // Middleware to parse JSON
 app.use(express.json());
 
-// Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files with 1-day cache to improve client-side performance
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '1d' // Cache static assets for 1 day
+}));
 
 // Use user routes
 app.use('/api', userRoutes);

@@ -49,7 +49,13 @@ jobs:
 
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f manifests/deployment.yaml
-        kubectl apply -f manifests/service.yaml
+        if [ -n "$KUBE_CONFIG_DATA" ]; then
+          echo "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig
+          export KUBECONFIG=kubeconfig
+          kubectl apply -f manifests/deployment.yaml
+          kubectl apply -f manifests/service.yaml
+        else
+          echo "KUBE_CONFIG_DATA secret is not set, skipping Kubernetes deployment."
+        fi
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}

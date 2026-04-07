@@ -3,7 +3,7 @@ name = "cloudflare-webapp"
 type = "javascript"
 
 [build]
-command = "npm install"
+command = "npm install sqlite3 --build-from-source=sqlite3 || true && npm install"
 [build.upload]
 format = "service-worker"
 main = "./server.js"

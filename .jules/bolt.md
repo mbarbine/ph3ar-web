@@ -1,0 +1,3 @@
+## 2024-04-09 - Optimize Read-Only Sequelize Queries
+**Learning:** Sequelize model instantiation overhead adds significant latency for read-only queries. Using `raw: true` skips creating heavy instance objects, which is extremely noticeable in tight loops or high-frequency endpoints like login.
+**Action:** Always use `raw: true` when executing `findOne` or `findAll` operations where the returned data is only read and not modified via instance methods.

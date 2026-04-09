@@ -35,7 +35,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push Docker image
-      run: docker push ghcr.io/${{ github.repository }}:latest
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push ghcr.io/${{ github.repository }}:latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

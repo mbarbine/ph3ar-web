@@ -3,7 +3,7 @@ name = "cloudflare-webapp"
 type = "javascript"
 
 [build]
-command = "npm install"
+command = "npm install --ignore-scripts"
 [build.upload]
 format = "service-worker"
 main = "./server.js"

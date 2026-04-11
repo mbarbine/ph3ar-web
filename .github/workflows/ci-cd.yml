@@ -22,7 +22,9 @@ jobs:
         node-version: '14'
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        pip install setuptools
+        npm install
 
     - name: Run tests
       run: npm test
@@ -33,7 +35,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push Docker image
-      run: docker push ghcr.io/${{ github.repository }}:latest
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push ghcr.io/${{ github.repository }}:latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

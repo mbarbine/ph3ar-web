@@ -15,7 +15,9 @@ const sessionSecret = process.env.SESSION_SECRET;
 app.use(express.json());
 
 // Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+// ⚡ Bolt: Add 1-day Cache-Control max-age header for static assets
+// This reduces unnecessary server requests for unchanged CSS/JS/images
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d' }));
 
 // Use user routes
 app.use('/api', userRoutes);
